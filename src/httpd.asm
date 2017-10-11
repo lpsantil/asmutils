@@ -1,6 +1,7 @@
-;Copyright (C) 1999-2002 Indrek Mandre <indrek@mare.ee>
-;			 Konstantin Boldyshev <konst@linuxassembly.org>
-;			 Rudolf Marek <marekr2@fel.cvut.cz>
+;Copyright (C) 1999-2002, 2017	Indrek Mandre <indrek@mare.ee>
+;				Konstantin Boldyshev <konst@linuxassembly.org>
+;			 	Rudolf Marek <marekr2@fel.cvut.cz>
+;				Louis P. Santillan <lpsantil@gmail.com>
 ;
 ;$Id: httpd.asm,v 1.23 2006/02/06 06:03:39 konst Exp $
 ;
@@ -52,6 +53,7 @@
 ;			send default mimetype for unknown extensions (KB)
 ;0.12  30-Aug-2002	no longer runs as root if UID defined (JH)
 ;			fixed cgi build problem, sendfile support (saved 21 bytes) (RM)
+;0.18  11-Oct-2017	Porting to Linux 2.6 and OpenShift (LPS)
 
 %include "system.inc"
 
@@ -78,10 +80,10 @@
 ;I let the header be sent by the server, but usually the CGI script
 ;sends its own headers. I think this is easy enough to fix.
 
-;%define	SENDHEADER
-;%define	LOG
-;%define	ERR404
-;%define	CGI
+%define	SENDHEADER
+%define	LOG
+%define	ERR404
+%define	CGI
 ;%define	PROC_HANDLE	;%
 ;%define UID	99
 
@@ -90,11 +92,12 @@
 ;%define	LOG_DEBUG
 %endif
 
-%ifdef  __LINUX__
-    %if __KERNEL__ >=22
-    %define USE_SENDFILE
-    %endif
-%endif
+;;; system.inc uses the wrong syscall number after Linux 2.6.0
+;%ifdef  __LINUX__
+;    %if __KERNEL__ >=22
+;    %define USE_SENDFILE
+;    %endif
+;%endif
 
 CODESEG
 
