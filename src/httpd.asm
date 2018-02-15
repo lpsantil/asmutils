@@ -93,11 +93,11 @@
 %endif
 
 ;;; system.inc uses the wrong syscall number after Linux 2.6.0
-;%ifdef  __LINUX__
-;    %if __KERNEL__ >=22
-;    %define USE_SENDFILE
-;    %endif
-;%endif
+%ifdef  __LINUX__
+    %if __KERNEL__ >=22
+    %define USE_SENDFILE
+    %endif
+%endif
 
 CODESEG
 
@@ -476,6 +476,7 @@ _lenh1	equ	$ - h1
 
 c_plain	db	"text/plain",EOL
 c_html	db	"text/html",EOL
+c_svg	db	"text/svg",EOL
 c_jpeg	db	"image/jpeg",EOL
 c_png	db	"image/png",EOL
 c_gif	db	"image/gif",EOL
@@ -486,6 +487,9 @@ ending	db	__n,__n
 extension_tab:
 	dd	"text",	c_plain
 	dd	"txt",	c_plain
+	dd	"1c",	c_plain
+	dd	"js",	c_plain
+	dd	"css",	c_plain
 	dd	"log",	c_plain
 	dd	"html",	c_html
 	dd	"htm",	c_html

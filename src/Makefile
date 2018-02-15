@@ -43,7 +43,12 @@ FILES += kldload
 LINKS += kldunload kldstat
 endif
 
-all:	$(FILES) $(BONUS) links
+FILES=httpd
+LINKS=
+BONUS=
+
+#all:	$(FILES) $(BONUS) links
+all:	$(FILES)
 
 links:	$(FILES)
 	-@( mkln() { [ ! -e $$2 ] && [ -x $$1 ] && $(LN) $$1 $$2; };\

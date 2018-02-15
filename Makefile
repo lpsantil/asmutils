@@ -6,7 +6,8 @@
 
 include MCONFIG
 
-SUBDIRS = src lib
+#SUBDIRS = src lib
+SUBDIRS = src
 DO_MAKE = @ for i in $(SUBDIRS); do $(MAKE) -C $$i $@; done
 
 all:	$(SUBDIRS)
